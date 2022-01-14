@@ -1,0 +1,31 @@
+version: '3.4'
+
+services:
+  personwishlistdb:
+    container_name: personwishlistdb
+    environment:
+       SA_PASSWORD: "WishList12345678"
+       ACCEPT_EULA: "Y"
+    restart: always
+    ports:
+       - "1431:1433" 
+
+  portainer:
+    container_name: portainer
+    restart: always
+    ports:
+      - "8080:8000"
+      - "9000:9000"
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - portainer_data:/data
+
+  personwishlist.api:
+    container_name: personwishlist.api
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - "ConnectionStrings:PersonWishListConnectionString=Server=personwishlistdb;Database=PersonWishListDb;User Id=sa;Password=WishList12345678;;TrustServerCertificate=true;"
+    depends_on:
+     - personwishlistdb
+    ports:
+      - "8000:80"

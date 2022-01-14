@@ -21,11 +21,10 @@ namespace Person.API.Controllers
 
         public PersonController(IMediator mediator)
         {
-            _mediator = _mediator ?? throw new ArgumentNullException(nameof(mediator));
+            _mediator = mediator ?? throw new ArgumentNullException(nameof(mediator));
         }
 
-        [Route("{lastName}", Name = "GetPeopleByLastName")]
-        [HttpGet]
+        [HttpGet("{lastName}", Name = "GetPeopleByLastName")]
         [ProducesResponseType(typeof(IEnumerable<PersonVm>), (int)HttpStatusCode.OK)]
         public async Task<ActionResult<IEnumerable<PersonVm>>> GetPeopleByLastName(string lastName)
         {

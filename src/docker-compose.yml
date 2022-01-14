@@ -1,0 +1,18 @@
+version: '3.4'
+
+services:
+
+  personwishlistdb:
+    image: mcr.microsoft.com/mssql/server:2017-latest
+
+  portainer:
+    image: portainer/portainer-ce
+
+  personwishlist.api:
+    image: ${DOCKER_REGISTRY-}personwishlistapi
+    build:
+      context: .
+      dockerfile: Services/Person/Person.API/Dockerfile
+
+volumes:
+  portainer_data:
