@@ -5,6 +5,9 @@ services:
   personwishlistdb:
     image: mcr.microsoft.com/mssql/server:2017-latest
 
+  addressdb:
+    image: redis:alpine
+
   portainer:
     image: portainer/portainer-ce
 
@@ -13,6 +16,12 @@ services:
     build:
       context: .
       dockerfile: Services/Person/Person.API/Dockerfile
+
+  addresswishlist.api:
+    image: ${DOCKER_REGISTRY-}addresswishlistapi
+    build:
+      context: .
+      dockerfile: Services/Address/Address.API/Dockerfile
 
 volumes:
   portainer_data:

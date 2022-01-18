@@ -10,6 +10,12 @@ services:
     ports:
        - "1431:1433" 
 
+  addressdb:
+    container_name: addressdb
+    restart: always
+    ports:
+     - "6379:6379"   
+
   portainer:
     container_name: portainer
     restart: always
@@ -29,3 +35,13 @@ services:
      - personwishlistdb
     ports:
       - "8000:80"
+
+  addresswishlist.api:
+    container_name: addresswishlist.api
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - "CacheSettings:ConnectionString=addressdb:6379"
+    depends_on:
+      - addressdb
+    ports:
+      - "8001:80"
