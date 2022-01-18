@@ -16,7 +16,6 @@ namespace Person.Application.Features.People.Commands.UpdatePerson
         public string LastName { get; set; }
         public string Gender { get; set; }
         public DateTime DateOfBirth { get; set; }
-        public int Age { get; set; }
 
     }
 }

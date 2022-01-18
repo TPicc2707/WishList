@@ -34,6 +34,10 @@ namespace Person.Application.Features.People.Commands.UpdatePerson
 
             _mapper.Map(request, personToUpdate, typeof(UpdatePersonCommandVm), typeof(Domain.Entities.Person));
 
+            int now = int.Parse(DateTime.Now.ToString("yyyyMMdd"));
+            int dob = int.Parse(personToUpdate.DateOfBirth.ToString("yyyyMMdd"));
+            personToUpdate.Age = (now - dob) / 10000;
+
             await _personRepository.UpdateAsync(personToUpdate);
 
             _logger.LogInformation($"Order {personToUpdate.Id} is successfully updated");

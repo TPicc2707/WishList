@@ -28,6 +28,10 @@ namespace Person.Application.Features.People.Commands.CreatePerson
         public async Task<int> Handle(CreatePersonCommandVm request, CancellationToken cancellationToken)
         {
             var person = _mapper.Map<Domain.Entities.Person>(request);
+            int now = int.Parse(DateTime.Now.ToString("yyyyMMdd"));
+            int dob = int.Parse(person.DateOfBirth.ToString("yyyyMMdd"));
+            person.Age = (now - dob) / 10000;
+
             var newPerson = await _personRepository.AddAsync(person);
 
             _logger.LogInformation($"New person {person.Id} was successfully created.");
