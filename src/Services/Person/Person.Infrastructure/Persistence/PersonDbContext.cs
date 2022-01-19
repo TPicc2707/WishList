@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Person.Domain.Common;
+using Person.Domain.Entities;
 using System;
 using System.Threading;
 using System.Threading.Tasks;
@@ -14,6 +15,7 @@ namespace Person.Infrastructure.Persistence
         }
 
         public DbSet<Domain.Entities.Person> People { get; set; }
+        public DbSet<Person_Address> People_Addresses { get; set; }
 
         public override Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
         {

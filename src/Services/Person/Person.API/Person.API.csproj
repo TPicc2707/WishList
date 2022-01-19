@@ -8,6 +8,9 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="MassTransit" Version="7.3.0" />
+	<PackageReference Include="MassTransit.AspNetCore" Version="7.3.0" />
+	<PackageReference Include="MassTransit.RabbitMQ" Version="7.3.0" />
     <PackageReference Include="MediatR" Version="9.0.0" />
     <PackageReference Include="Microsoft.Data.SqlClient" Version="4.0.0" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="5.0.13">
@@ -19,6 +22,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\..\BuildingBlocks\EventBus.Messages\EventBus.Messages.csproj" />
     <ProjectReference Include="..\Person.Application\Person.Application.csproj" />
     <ProjectReference Include="..\Person.Infrastructure\Person.Infrastructure.csproj" />
   </ItemGroup>

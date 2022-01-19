@@ -6,6 +6,7 @@
 
   <ItemGroup>
     <Folder Include="Contracts\Infrastructure\" />
+    <Folder Include="Features\People_Address\Queries\" />
   </ItemGroup>
 
   <ItemGroup>
