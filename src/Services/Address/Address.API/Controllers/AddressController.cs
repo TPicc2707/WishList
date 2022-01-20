@@ -17,7 +17,7 @@ namespace Address.API.Controllers
         private readonly IAddressRepository _addressRepository;
         private readonly IPublishEndpoint _publishEndpoint;
         private readonly IMapper _mapper;
-        public AddressController(IAddressRepository addressRepository, IMapper mapper
+        public AddressController(IAddressRepository addressRepository, IMapper mapper,
             IPublishEndpoint publishEndpoint)
         {
             _addressRepository = addressRepository ?? throw new ArgumentNullException(nameof(addressRepository));
@@ -52,7 +52,7 @@ namespace Address.API.Controllers
         [HttpPost]
         [ProducesResponseType((int)HttpStatusCode.Accepted)]
         [ProducesResponseType((int)HttpStatusCode.BadRequest)]
-        public async Task<IActionResult> AddAddress([FromBody] CreatePersonAddress personAddress)
+        public async Task<IActionResult> CreateAddress([FromBody] CreatePersonAddress personAddress)
         {
             var address = await _addressRepository.GetPersonAddresses(personAddress.Person_Id.ToString());
             if(address == null)
