@@ -48,20 +48,30 @@ namespace Address.API.Controllers
             return Ok();
         }
 
-        [Route("[action]")]
+        [Route("[action]/{ID}")]
         [HttpPost]
         [ProducesResponseType((int)HttpStatusCode.Accepted)]
         [ProducesResponseType((int)HttpStatusCode.BadRequest)]
-        public async Task<IActionResult> CreateAddress([FromBody] CreatePersonAddress personAddress)
+        public async Task<IActionResult> CreateAddress(string ID)
         {
-            var address = await _addressRepository.GetPersonAddresses(personAddress.Person_Id.ToString());
+            var address = await _addressRepository.GetPersonAddresses(ID);
             if(address == null)
             {
                 return BadRequest();
             }
 
-            var eventMessage = _mapper.Map<CreatePersonAddressEvent>(personAddress);
-            await _publishEndpoint.Publish(eventMessage);
+            foreach(var personAddress in address.PersonAddresses)
+            {
+                CreatePersonAddress newAddress = new CreatePersonAddress();
+                newAddress.Person_Id = Convert.ToInt32(ID);
+                newAddress.Street = personAddress.Street;
+                newAddress.City = personAddress.City;
+                newAddress.State = personAddress.State;
+                newAddress.ZipCode = personAddress.ZipCode;
+
+                var eventMessage = _mapper.Map<CreatePersonAddressEvent>(newAddress);
+                await _publishEndpoint.Publish(eventMessage);
+            }
 
             await _addressRepository.DeletePersonAddresses(address.PersonID);
 

@@ -32,7 +32,7 @@ namespace Person.Application.Features.People_Address.Commands.CreatePerson_Addre
             var personAddressEntity = _mapper.Map<Person_Address>(request);
             var newPersonAddress = await _personAddressRepository.AddAsync(personAddressEntity);
 
-            _logger.LogInformation($"Order {newPersonAddress.Id} is successfully created.");
+            _logger.LogInformation($"Address {newPersonAddress.Id} is successfully created.");
 
             return newPersonAddress.Id;
         }
