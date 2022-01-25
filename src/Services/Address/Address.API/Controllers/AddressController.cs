@@ -17,13 +17,15 @@ namespace Address.API.Controllers
         private readonly IAddressRepository _addressRepository;
         private readonly IPublishEndpoint _publishEndpoint;
         private readonly IMapper _mapper;
-        public AddressController(IAddressRepository addressRepository, IMapper mapper,
-            IPublishEndpoint publishEndpoint)
+
+        public AddressController(IAddressRepository addressRepository, IPublishEndpoint publishEndpoint,
+            IMapper mapper)
         {
             _addressRepository = addressRepository ?? throw new ArgumentNullException(nameof(addressRepository));
-            _mapper  = mapper ?? throw new ArgumentNullException(nameof(mapper));
             _publishEndpoint  = publishEndpoint ?? throw new ArgumentNullException(nameof(publishEndpoint));
+            _mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
         }
+
         [HttpGet("{ID}", Name = "GetAddresses")]
         [ProducesResponseType(typeof(Addresses), (int)HttpStatusCode.OK)]
         public async Task<ActionResult<Addresses>> GetAddresses(string ID)

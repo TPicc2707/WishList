@@ -16,6 +16,7 @@ namespace Person.Infrastructure.Persistence
 
         public DbSet<Domain.Entities.Person> People { get; set; }
         public DbSet<Person_Address> People_Addresses { get; set; }
+        public DbSet<Person_PhoneNumber> People_PhoneNumbers { get; set; }
 
         public override Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
         {

@@ -3,6 +3,7 @@ using Person.Application.Features.People.Commands.CreatePerson;
 using Person.Application.Features.People.Commands.UpdatePerson;
 using Person.Application.Features.People.Queries;
 using Person.Application.Features.People_Address.Commands.CreatePerson_Address;
+using Person.Application.Features.People_PhoneNumber.Commands.CreatePerson_PhoneNumber;
 using Person.Domain.Entities;
 using System;
 using System.Collections.Generic;
@@ -21,6 +22,8 @@ namespace Person.Application.Mapping
             CreateMap<Domain.Entities.Person, UpdatePersonCommandVm>().ReverseMap();
 
             CreateMap<Person_Address, CreatePersonAddressCommandVm>().ReverseMap();
+
+            CreateMap<Person_PhoneNumber, CreatePersonPhoneNumberCommandVm>().ReverseMap();
         }
     }
 }

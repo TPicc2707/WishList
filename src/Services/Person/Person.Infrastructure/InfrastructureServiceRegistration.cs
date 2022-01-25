@@ -22,6 +22,7 @@ namespace Person.Infrastructure
             services.AddScoped(typeof(IAsyncRepository<>), typeof(RepositoryBase<>));
             services.AddScoped<IPersonRepository, PersonRepository>();
             services.AddScoped<IPersonAddressRepository, PersonAddressRepository>();
+            services.AddScoped<IPersonPhoneNumberRepository, PersonPhoneNumberRepository>();
 
             return services;
         }

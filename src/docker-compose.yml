@@ -8,6 +8,9 @@ services:
   addressdb:
     image: redis:alpine
 
+  phonedb:
+    image: redis:alpine
+
   rabbitmq:
     image: rabbitmq:3-management-alpine
 
@@ -26,5 +29,12 @@ services:
       context: .
       dockerfile: Services/Address/Address.API/Dockerfile
 
+  phonewishlist.api:
+    image: ${DOCKER_REGISTRY-}phonewishlistapi
+    build:
+      context: .
+      dockerfile: Services/Phone/Phone.API/Dockerfile
+
 volumes:
   portainer_data:
+

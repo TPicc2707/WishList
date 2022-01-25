@@ -4,22 +4,19 @@ using Microsoft.Extensions.Logging;
 using Person.Application.Contracts.Persistence;
 using Person.Domain.Entities;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
 namespace Person.Application.Features.People_Address.Commands.CreatePerson_Address
 {
-    public class CreatePersonAddressHandler : IRequestHandler<CreatePersonAddressCommandVm, int>
+    public class CreatePersonAddressCommandHandler : IRequestHandler<CreatePersonAddressCommandVm, int>
     {
         private readonly IPersonAddressRepository _personAddressRepository;
         private readonly IMapper _mapper;
-        private readonly ILogger<CreatePersonAddressHandler> _logger;
+        private readonly ILogger<CreatePersonAddressCommandHandler> _logger;
 
-        public CreatePersonAddressHandler(IPersonAddressRepository personAddressRepository, IMapper mapper,
-            ILogger<CreatePersonAddressHandler> logger)
+        public CreatePersonAddressCommandHandler(IPersonAddressRepository personAddressRepository, IMapper mapper,
+            ILogger<CreatePersonAddressCommandHandler> logger)
         {
             _personAddressRepository = personAddressRepository ?? throw new ArgumentNullException(nameof(personAddressRepository));
             _mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));

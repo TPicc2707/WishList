@@ -1,16 +1,19 @@
-using EventBus.Messages.Common;
 using MassTransit;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
-using Person.API.EventBusConsumer;
-using Person.Application;
-using Person.Infrastructure;
+using Phone.API.Repositories;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 
-namespace Person.API
+namespace Phone.API
 {
     public class Startup
     {
@@ -24,38 +27,26 @@ namespace Person.API
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddApplicationServices();
-            services.AddInfrastructureServices(Configuration);
+            services.AddStackExchangeRedisCache(options => {
+                options.Configuration = Configuration.GetValue<string>("CacheSettings:ConnectionString");
+            });
+            services.AddScoped<IPhoneNumberRepository, PhoneNumberRepository>();
+
+            services.AddAutoMapper(typeof(Startup));
 
             services.AddMassTransit(config =>
             {
-                config.AddConsumer<CreatePersonAddressConsumer>();
-
                 config.UsingRabbitMq((ctx, cfg) =>
                 {
                     cfg.Host(Configuration["EventBusSettings:HostAddress"]);
-
-                    cfg.ReceiveEndpoint(EventBusConstants.CreatePersonAddressQueue, c =>
-                    {
-                        c.ConfigureConsumer<CreatePersonAddressConsumer>(ctx);
-                    });
-
-                    cfg.ReceiveEndpoint(EventBusConstants.CreatePersonPhoneNumberQueue, c =>
-                    {
-                        c.ConfigureConsumer<CreatePersonPhoneNumberConsumer>(ctx);
-                    });
-
                 });
             });
             services.AddMassTransitHostedService();
 
-            services.AddAutoMapper(typeof(Startup));
-            services.AddScoped<CreatePersonAddressConsumer>();
-
             services.AddControllers();
             services.AddSwaggerGen(c =>
             {
-                c.SwaggerDoc("v1", new OpenApiInfo { Title = "Person.API", Version = "v1" });
+                c.SwaggerDoc("v1", new OpenApiInfo { Title = "Phone.API", Version = "v1" });
             });
         }
 
@@ -66,7 +57,7 @@ namespace Person.API
             {
                 app.UseDeveloperExceptionPage();
                 app.UseSwagger();
-                app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "Person.API v1"));
+                app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "Phone.API v1"));
             }
 
             app.UseRouting();

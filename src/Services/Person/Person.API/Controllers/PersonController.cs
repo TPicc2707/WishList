@@ -6,6 +6,7 @@ using Person.Application.Features.People.Commands.DeletePerson;
 using Person.Application.Features.People.Commands.UpdatePerson;
 using Person.Application.Features.People.Queries;
 using Person.Application.Features.People_Address.Commands.CreatePerson_Address;
+using Person.Application.Features.People_PhoneNumber.Commands.CreatePerson_PhoneNumber;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -79,6 +80,15 @@ namespace Person.API.Controllers
         public async Task<ActionResult<int>> CreatePersonAddress([FromBody] CreatePersonAddressCommandVm createPersonAddressCommandVm)
         {
             var result = await _mediator.Send(createPersonAddressCommandVm);
+            return Ok(result);
+        }
+
+        [Route("[action]", Name = "CreatePersonPhoneNumber")]
+        [HttpPost]
+        [ProducesResponseType((int)HttpStatusCode.OK)]
+        public async Task<ActionResult<int>> CreatePersonPhoneNumber([FromBody] CreatePersonPhoneNumberCommandVm createPersonPhoneNumberCommandVm)
+        {
+            var result = await _mediator.Send(createPersonPhoneNumberCommandVm);
             return Ok(result);
         }
 

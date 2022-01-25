@@ -1,15 +1,10 @@
 ﻿using FluentValidation;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Person.Application.Features.People_Address.Commands.CreatePerson_Address
 {
-    public class CreatePersonAddressValidator : AbstractValidator<CreatePersonAddressCommandVm>
+    public class CreatePersonAddressCommandValidator : AbstractValidator<CreatePersonAddressCommandVm>
     {
-        public CreatePersonAddressValidator()
+        public CreatePersonAddressCommandValidator()
         {
             RuleFor(p => p.Person_Id)
                 .NotEmpty().WithMessage("{Person_Id} is required.")

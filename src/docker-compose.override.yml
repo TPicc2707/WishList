@@ -16,6 +16,12 @@ services:
     ports:
      - "6379:6379"   
 
+  phonedb:
+    container_name: phonedb
+    restart: always
+    ports:
+     - "26379:6379"  
+
   rabbitmq:
     container_name: rabbitmq
     restart: always
@@ -56,3 +62,16 @@ services:
       - rabbitmq
     ports:
       - "8001:80"
+
+  phonewishlist.api:
+    container_name: phonewishlist.api
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - "CacheSettings:ConnectionString=phonedb:6379"
+      - "EventBusSettings:HostAddress=amqp://guest:guest@rabbitmq:5672"
+    depends_on:
+      - phonedb
+      - rabbitmq
+    ports:
+      - "8002:80"
+
